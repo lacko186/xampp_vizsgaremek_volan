@@ -303,6 +303,52 @@ try {
         }
 /*-----------------------------------------------------------------------------------------------------@MEDIA END--------------------------------------------------------------------------------------------------------*/
    
+footer {
+            text-align: center;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h2 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+/*-----------------------------------------------------------------------------------------------------CSS -FOOTER--------------------------------------------------------------------------------------------------------*/
+
     </style>
 </head>
 <body>
@@ -327,7 +373,7 @@ try {
         <h1>Jegy és bérlet vásárlás</h1>
     </div>
     </div>
-    <div style="margin-top: 5%;" class="container">
+    <div style="margin-top: 5%; margin-bottom: 5%" class="container">
         <form id="invoiceForm" novalidate>
             <div style="font-weight: bold;" class="section-title">Vásárló adatai</div>
             <div class="input-group">
@@ -440,45 +486,220 @@ try {
             <pre id="invoiceDetails"></pre>
             <canvas id="qrcode"></canvas>
             <div class="button-group">
-                <button onclick="downloadPDF()">PDF letöltése</button>
+                <button onclick="downloadPDF()">PDF letöltése</button>               
+
+               
             </div>
         </div>
     </div>
 
+    
+    <!--------------------------------------------------------------------------------------Késés----------------------------------------------------------->
 
+    <div style="max-width: 20%" class="container">
+    <form id="delayForm" novalidate>
+        <div style="font-weight: bold;" class="section-title">Igazolás</div>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <p style="text-align:center">Késett a busz?</p>
+                <label class="input-label">Teljes név*</label>
+                <input type="text" id="delayName" pattern="[A-Za-zÀ-ž\s]{2,50}" 
+                       placeholder="pl. Nagy János" required
+                       oninput="validateField(this)"><br>
+                       
+                <label class="input-label">Kiindulási Állomás*</label><br>
+                <input type="text" id="startStation" pattern="[A-Za-zÀ-ž\s]{2,50}" 
+                       placeholder="pl. Kaposvár" required
+                       oninput="validateField(this)"><br>
+                       
+                <label class="input-label">Célállomás*</label>
+                <input type="text" id="endStation" pattern="[A-Za-zÀ-ž\s]{2,50}" 
+                       placeholder="pl. Nagykanizsa" required
+                       oninput="validateField(this)"><br>
+
+                <label class="input-label">Indulás</label>
+                <input type="time" id="departureTime" value="00:00"
+                        required
+                       oninput="validateField(this)">
+                <label class="input-label">Érkezés</label>
+                <input type="time" id="arrivalTime" value="00:00"
+                        required
+                       oninput="validateField(this)">
+                <label class="input-label">Késés (perc)</label>
+                <input type="number" id="delayDuration"
+                placeholder="pl. 34"
+                        required
+                       oninput="validateField(this)">        
+            </div>
+        </div>
+        <p style="color: red; font-weight: bold;text-align:center">Figyelem!!<br> Igazolást csak 20 perc késés esetén állíthat ki!</p>
+           
+        <button type="button" style="margin-top:10%;margin-left: 30%" onclick="downloadPDF2()">Igazolás letöltése</button>
+    </form>
+</div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h2>Kaposvár közlekedés</h2>
+                <p style="font-style: italic">Megbízható közlekedési szolgáltatások<br> az Ön kényelméért már több mint 50 éve.</p><br>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/VOLANBUSZ/"><svg xmlns="http://www.w3.org/2000/svg" style="max-width: 10px" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#00008b" d="M279.1 288l14.2-92.7h-88.9v-60.1c0-25.4 12.4-50.1 52.2-50.1h40.4V6.3S260.4 0 225.4 0c-73.2 0-121.1 44.4-121.1 124.7v70.6H22.9V288h81.4v224h100.2V288z"/></svg></a>
+                    <a href="https://x.com/volanbusz_hu?mx=2"><svg xmlns="http://www.w3.org/2000/svg" style="max-width: 15px" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#add8e6" d="M459.4 151.7c.3 4.5 .3 9.1 .3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53 51.7 63.7 129.3 105.3 216.4 109.8-1.6-7.8-2.6-15.9-2.6-24 0-57.8 46.8-104.9 104.9-104.9 30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3z"/></svg></a>
+                    <a href="https://www.instagram.com/volanbusz/"><svg xmlns="htt://www.w3.org/2000/svg" style="max-width: 15px" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ff0000" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 2p9.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+                </div>
+            </div>
+           
+            <div  class="footer-section">
+                <h3>Elérhetőség</h3>
+                <ul class="footer-links">
+                    <li><svg style="max-width: 17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg> +36-82/411-850</li>
+                    <li><svg style="max-width: 17px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg> titkarsag@kkzrt.hu</li>
+                    <li><svg style="max-width: 16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M172.3 501.7C27 291 0 269.4 0 192 0 86 86 0 192 0s192 86 192 192c0 77.4-27 99-172.3 309.7-9.5 13.8-29.9 13.8-39.5 0zM192 272c44.2 0 80-35.8 80-80s-35.8-80-80-80-80 35.8-80 80 35.8 80 80 80z"/></svg> 7400 Kaposvár, Cseri út 16.</li>
+                    <li><svg style="max-width: 16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M172.3 501.7C27 291 0 269.4 0 192 0 86 86 0 192 0s192 86 192 192c0 77.4-27 99-172.3 309.7-9.5 13.8-29.9 13.8-39.5 0zM192 272c44.2 0 80-35.8 80-80s-35.8-80-80-80-80 35.8-80 80 35.8 80 80 80z"/></svg> Áchim András utca 1.</li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p>© 2024 Kaposvár közlekedési Zrt. Minden jog fenntartva.</p>
+        </div>
+    </footer>
     <script>
       
-        const today = new Date();
-        document.getElementById("validFrom").value = today.toISOString().split("T")[0];
-        document.getElementById("validFrom").min = today.toISOString().split("T")[0];
+      // Validate delay form fields
+function validateDelayForm() {
+    const name = document.getElementById('delayName').value;
+    const startStation = document.getElementById('startStation').value;
+    const endStation = document.getElementById('endStation').value;
+    const departureTime = document.getElementById('departureTime').value;
+    const arrivalTime = document.getElementById('arrivalTime').value;
+    const delayDuration = document.getElementById('delayDuration').value;
 
-        // Set validUntil min date and default (next month for monthly tickets)
-        document.getElementById("validUntil").min = today.toISOString().split("T")[0];
+    if (!name || !startStation || !endStation || !departureTime || !arrivalTime || !delayDuration) {
+        alert("Kérjük, töltse ki az összes kötelező mezőt!");
+        return false;
+    }
 
-        // Calculate price when ticket type or quantity changes
-        function updatePrice() {
-            const ticketSelect = document.getElementById('ticketType');
-            const quantity = document.getElementById('quantity').value;
-            const selectedOption = ticketSelect.options[ticketSelect.selectedIndex];
-            
-            if (selectedOption.value) {
-                const basePrice = parseInt(selectedOption.dataset.price);
-                const total = basePrice * quantity;
-                document.getElementById('totalPrice').textContent = total.toLocaleString();
+    // Check if delay is at least 20 minutes
+    if (delayDuration < 20) {
+        alert("Igazolás csak 20 perc vagy annál hosszabb késés esetén állítható ki!");
+        return false;
+    }
 
-                // Update validUntil date based on ticket type
-                const validFrom = new Date(document.getElementById('validFrom').value);
-                if (selectedOption.value.includes('monthly')) {
-                    const validUntil = new Date(validFrom);
-                    validUntil.setMonth(validUntil.getMonth() + 1);
-                    document.getElementById('validUntil').value = validUntil.toISOString().split('T')[0];
-                } else {
-                    const validUntil = new Date(validFrom);
-                    validUntil.setDate(validUntil.getDate() + 1);
-                    document.getElementById('validUntil').value = validUntil.toISOString().split('T')[0];
-                }
-            }
+    return true;
+}
+
+// Calculate delay duration automatically
+function calculateDelay() {
+    const departureTime = document.getElementById('departureTime').value;
+    const arrivalTime = document.getElementById('arrivalTime').value;
+
+    if (departureTime && arrivalTime) {
+        const departure = new Date(`2000-01-01T${departureTime}`);
+        const arrival = new Date(`2000-01-01T${arrivalTime}`);
+        
+        // If arrival is before departure, add 24 hours to arrival
+        if (arrival < departure) {
+            arrival.setDate(arrival.getDate() + 1);
         }
+
+        const diffMinutes = Math.round((arrival - departure) / (1000 * 60));
+        document.getElementById('delayDuration').value = diffMinutes;
+    }
+}
+
+// Add event listeners for automatic delay calculation
+document.getElementById('departureTime').addEventListener('change', calculateDelay);
+document.getElementById('arrivalTime').addEventListener('change', calculateDelay);
+
+// Generate unique ID for delay verification
+function generateDelayVerificationId() {
+    return 'DELAY-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+}
+
+// Modified downloadPDF2 function to only include image
+function downloadPDF2() {
+    if (!validateDelayForm()) {
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+    
+    // Set custom font
+    pdf.setFont("helvetica", "bold");
+    
+    // Add title
+    pdf.setFontSize(15);
+    pdf.setTextColor(0, 31, 63);
+    try {
+        pdf.addImage('kapos_logo.png', 'PNG', 50, 70, 60, 50);
+    } catch (error) {
+        console.error('Hiba a kép betöltésekor:', error);
+        alert('Hiba történt a kép betöltésekor. Kérjük, ellenőrizze, hogy a kép létezik és megfelelő formátumú.');
+        return;
+    }
+    pdf.text("Késési Igazolás", 105, 35, { align: "center" });
+
+    // Add verification ID
+    const verificationId = generateDelayVerificationId();
+    pdf.setFontSize(12);
+    pdf.setTextColor(0, 0, 0);
+    pdf.text(`Igazolás azonosító: ${verificationId}`, 20, 50);
+
+    pdf.text(`Jegykiadó :` `Kaposvári Közlekedési Zrt.` 30,20,100,50);
+    pdf.text(`Kiindulási Állomés`);
+    pdf.text(`Célállomás:`);
+    pdf.text(`Késés-perc:`);
+    
+
+    pdf.text(`A menetjegye(ke)t és az igazolást meg kell őrizni az esetleges igényérvényesítés céljáből`);
+
+    pdf.text(`Aláírás::`);
+
+
+    try {
+        pdf.addImage('alairas.png', 'PNG', 50, 70, 60, 50);
+    } catch (error) {
+        console.error('Hiba a kép betöltésekor:', error);
+        alert('Hiba történt a kép betöltésekor. Kérjük, ellenőrizze, hogy a kép létezik és megfelelő formátumú.');
+        return;
+    }
+    
+    // Save the PDF
+    pdf.save(`kesesi-igazolas-${verificationId}.pdf`);
+}
+
+// Initialize date fields
+const today = new Date();
+document.getElementById("validFrom").value = today.toISOString().split("T")[0];
+document.getElementById("validFrom").min = today.toISOString().split("T")[0];
+document.getElementById("validUntil").min = today.toISOString().split("T")[0];
+
+// Calculate price when ticket type or quantity changes
+function updatePrice() {
+    const ticketSelect = document.getElementById('ticketType');
+    const quantity = document.getElementById('quantity').value;
+    const selectedOption = ticketSelect.options[ticketSelect.selectedIndex];
+    
+    if (selectedOption.value) {
+        const basePrice = parseInt(selectedOption.dataset.price);
+        const total = basePrice * quantity;
+        document.getElementById('totalPrice').textContent = total.toLocaleString();
+
+        // Update validUntil date based on ticket type
+        const validFrom = new Date(document.getElementById('validFrom').value);
+        if (selectedOption.value.includes('monthly')) {
+            const validUntil = new Date(validFrom);
+            validUntil.setMonth(validUntil.getMonth() + 1);
+            document.getElementById('validUntil').value = validUntil.toISOString().split('T')[0];
+        } else {
+            const validUntil = new Date(validFrom);
+            validUntil.setDate(validUntil.getDate() + 1);
+            document.getElementById('validUntil').value = validUntil.toISOString().split('T')[0];
+        }
+    }
+}
 
         document.getElementById('ticketType').addEventListener('change', updatePrice);
         document.getElementById('quantity').addEventListener('change', updatePrice);
@@ -554,6 +775,7 @@ Egyedi azonosító: ${formData.invoiceId}
             
         }
 
+        
         function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF();
@@ -561,7 +783,7 @@ Egyedi azonosító: ${formData.invoiceId}
             // Add company logo/header
             pdf.setFontSize(20);
             pdf.setTextColor(0, 31, 63); // Primary color
-            pdf.text("Volán Számla", 105, 20, { align: "center" });
+            pdf.text("Kaposvári Közlekedési Zrt. Számla", 105, 20, { align: "center" });
             
             // Add invoice details
             pdf.setFontSize(12);
